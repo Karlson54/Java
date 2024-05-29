@@ -1,6 +1,6 @@
 package com.example.finance.config.security;
 
-import com.example.finance.controller.registration.JwtService;
+import com.example.finance.service.auth.JwtService;
 import com.example.finance.service.user.UserService;
 
 import jakarta.servlet.FilterChain;

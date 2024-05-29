@@ -18,10 +18,6 @@ public class StudentProfile extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String firstName;
-    private String lastName;
-    private String email;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;

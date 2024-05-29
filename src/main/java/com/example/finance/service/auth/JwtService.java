@@ -1,4 +1,4 @@
-package com.example.finance.controller.registration;
+package com.example.finance.service.auth;
 
 import com.example.finance.model.User;
 import io.jsonwebtoken.Claims;

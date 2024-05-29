@@ -14,6 +14,12 @@ public class ControlMapper {
 
     public ControlMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+        this.modelMapper.createTypeMap(Control.class, ControlDTO.class)
+                .addMappings(mapper -> {
+                    mapper.map(src -> src.getDiscipline().getId(), ControlDTO::setDisciplineId);
+                    mapper.map(src -> src.getGroup().getId(), ControlDTO::setGroupId);
+                });
+
     }
 
     public ControlDTO toDto(Control control) {

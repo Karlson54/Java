@@ -12,4 +12,6 @@ public class RegistrationDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private Long groupId;
+    private Long facultyId;
 }

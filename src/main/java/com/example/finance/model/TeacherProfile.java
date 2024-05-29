@@ -18,10 +18,6 @@ public class TeacherProfile extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String firstName;
-    private String lastName;
-    private String email;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;

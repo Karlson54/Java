@@ -25,9 +25,9 @@ public class SwaggerConfig {
                         addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes
                         ("Bearer Authentication", createAPIKeyScheme()))
-                .info(new Info().title("FINANCE SERVICE REST API")
-                        .description("Finance service")
-                        .version("1.0").contact(new Contact().name("Created by Dmitriy Olaba PD-34")))
+                .info(new Info().title("SCHEDULE SERVICE REST API")
+                        .description("Schedule service")
+                        .version("1.0").contact(new Contact().name("RBan")))
                 ;
     }
 }

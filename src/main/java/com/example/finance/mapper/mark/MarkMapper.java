@@ -14,6 +14,11 @@ public class MarkMapper {
 
     public MarkMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+        this.modelMapper.createTypeMap(Mark.class, MarkDTO.class)
+                .addMappings(mapper -> {
+                    mapper.map(src -> src.getControl().getId(), MarkDTO::setControlId);
+                    mapper.map(src -> src.getStudent().getId(), MarkDTO::setStudentId);
+                });
     }
 
     public MarkDTO toDto(Mark mark) {

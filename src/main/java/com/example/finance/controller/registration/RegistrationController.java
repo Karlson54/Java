@@ -1,5 +1,6 @@
 package com.example.finance.controller.registration;
 
+import com.example.finance.service.auth.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,9 +21,6 @@ import lombok.RequiredArgsConstructor;
 public class RegistrationController {
     private final RegistrationService registrationService;
 
-    private final JwtService jwtService;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
 
     @PostMapping("/student")
     public ResponseEntity<String> registerStudent(@RequestBody RegistrationDTO registrationDTO) {
@@ -35,4 +33,6 @@ public class RegistrationController {
         registrationDTO.setRole(Role.ROLE_TEACHER);
         return ResponseEntity.ok(registrationService.registerUser(registrationDTO));
     }
+
+
 }

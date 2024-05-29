@@ -93,8 +93,8 @@ public class ControlService {
                 .collect(Collectors.toList());
     }
 
-    public List<ControlDTO> findControlsByStudent(Long studentId) {
-        return controlRepository.findAllByGroupId(studentId).stream()
+    public List<ControlDTO> findControlsByGroupId(Long groupId) {
+        return controlRepository.findAllByGroupId(groupId).stream()
                 .map(controlMapper::toDto)
                 .collect(Collectors.toList());
     }

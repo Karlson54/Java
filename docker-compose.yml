@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
 
-  finance-service:
+  diary-service:
     build:
       context: .
       dockerfile: Dockerfile

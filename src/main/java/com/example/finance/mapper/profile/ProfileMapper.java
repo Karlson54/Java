@@ -22,7 +22,9 @@ public class ProfileMapper {
     public TeacherProfileDTO toDto(TeacherProfile teacherProfile) {
         TeacherProfileDTO dto = modelMapper.map(teacherProfile, TeacherProfileDTO.class);
         dto.setUserId(teacherProfile.getUser().getId());
-        dto.setFacultyId(teacherProfile.getFaculty().getId());
+        if (teacherProfile.getFaculty() != null) {
+            dto.setFacultyId(teacherProfile.getFaculty().getId());
+        }
         return dto;
     }
 
@@ -36,7 +38,9 @@ public class ProfileMapper {
     public StudentProfileDTO toDto(StudentProfile studentProfile) {
         StudentProfileDTO dto = modelMapper.map(studentProfile, StudentProfileDTO.class);
         dto.setUserId(studentProfile.getUser().getId());
-        dto.setGroupId(studentProfile.getGroup().getId());
+        if (studentProfile.getGroup() != null) {
+            dto.setGroupId(studentProfile.getGroup().getId());
+        }
         return dto;
     }
 

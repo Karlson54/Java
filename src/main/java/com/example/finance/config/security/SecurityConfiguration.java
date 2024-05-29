@@ -1,10 +1,10 @@
 package com.example.finance.config.security;
 
+import com.example.finance.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,14 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-
-import com.example.finance.service.user.UserService;
-
-import java.net.http.HttpRequest;
-import java.util.List;
-
-import javax.management.relation.Role;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -39,28 +31,22 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(request -> {
-                    var corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.setAllowedOriginPatterns(List.of("*"));
-                    corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    corsConfiguration.setAllowedHeaders(List.of("*"));
-                    corsConfiguration.setAllowCredentials(true);
-                    return corsConfiguration;
-                }))
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers(HttpMethod.PUT)
-                        .hasRole("TEACHER")
-                        .requestMatchers("/auth/sign-in", "/auth/sign-up").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**",
-                                "/api/register/**")
-                        .permitAll()
-                        // .requestMatchers(HttpMethod.DELETE)
-                        // .hasRole("ROLE_TEACHER")
-                        // .requestMatchers(HttpMethod.PATCH)
-                        // .hasRole("ROLE_TEACHER")
-                        // .requestMatchers(HttpMethod.PUT)
-                        // .hasRole("ROLE_TEACHER")
-                        .anyRequest().permitAll())
+
+                .authorizeHttpRequests(authorizeRequests ->
+
+                        authorizeRequests
+                                .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**",
+                                        "/api/register/**")
+                                .permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/register").permitAll() // Разрешаем всем доступ к /api/register
+                                .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll() // Разрешаем всем доступ к /api/auth
+                                .requestMatchers(HttpMethod.POST, "/**").hasRole("TEACHER") // Разрешаем только пользователям с ролью ROLE_TEACHER для всех остальных POST запросов
+                                .requestMatchers(HttpMethod.PUT, "/**").hasRole("TEACHER") // Разрешаем только пользователям с ролью ROLE_TEACHER для всех PUT запросов
+                                .requestMatchers(HttpMethod.PATCH, "/**").hasRole("TEACHER") // Разрешаем только пользователям с ролью ROLE_TEACHER для всех PATCH запросов
+                                .requestMatchers(HttpMethod.DELETE, "/**").hasRole("TEACHER") // Разрешаем только пользователям с ролью ROLE_TEACHER для всех DELETE запросов
+                                .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
+
+                )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter,

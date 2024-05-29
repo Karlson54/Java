@@ -1,7 +1,6 @@
 package com.example.finance.dto.control;
 
 import lombok.Data;
-import java.time.LocalDate;
 
 @Data
 public class ControlDTO {
@@ -9,7 +8,7 @@ public class ControlDTO {
     private Long disciplineId;
     private Long groupId;
     private String type;
-    private LocalDate dueDate;
+    private Long dueDate;
     private String description;
     private String title;
 }

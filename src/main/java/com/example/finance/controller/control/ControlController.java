@@ -64,8 +64,8 @@ public class ControlController {
         return controlService.findMarksByStudentAndDiscipline(studentId, disciplineId);
     }
 
-    @GetMapping("/students/{studentId}/controls")
-    public List<ControlDTO> getControlsByStudent(@PathVariable Long studentId) {
-        return controlService.findControlsByStudent(studentId);
+    @GetMapping("/groups/{groupId}/controls")
+    public List<ControlDTO> getControlsByStudent(@PathVariable Long groupId) {
+        return controlService.findControlsByGroupId(groupId);
     }
 }
